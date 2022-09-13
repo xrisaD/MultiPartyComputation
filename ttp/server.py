@@ -3,6 +3,7 @@ import timeit
 from ttp.model import TTPModel
 from statistics import mean
 
+
 # TTP needs to steps to run
 # empty_model = TPPModel(10)
 # empty_model.step()
@@ -24,5 +25,5 @@ def runTTP(times_to_run_the_experiment=100, times=None, times_range=None):
         for i in range(2):
             model.step()
         stop = timeit.default_timer()
-        res.append(stop-start)
+        res.append(stop - start)
     return mean(res)
