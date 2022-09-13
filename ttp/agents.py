@@ -32,5 +32,5 @@ class Runner(mesa.Agent):
             ttp = self.model.schedule.agents[-1]
             ttp.values.append(self.time)
             self.notSent = False
-        else:
-            print(self.mean)
+        # else:
+        #     print(self.mean)

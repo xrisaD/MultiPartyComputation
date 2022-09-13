@@ -4,7 +4,7 @@ from mpc.agents import Runner
 
 params = {"N": range(10, 500, 10)}
 
-results = mesa.batch_run(
+results = mesa.BatchRunner(
     MPCModel,
     parameters=params,
     iterations=5,

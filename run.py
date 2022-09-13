@@ -1,10 +1,3 @@
-#from ttp.server import results
+from ttp.server import runTTP
 
-#results.launch()
-
-from ttp.model import TPPModel
-
-empty_model = TPPModel(10)
-empty_model.step()
-empty_model.step()
-# empty_model.step()
+res = runTTP(times=range(5, 0, -1))
