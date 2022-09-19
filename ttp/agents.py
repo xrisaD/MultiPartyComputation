@@ -2,6 +2,7 @@ import mesa
 
 from statistics import mean
 
+
 class TrustedThirdParty(mesa.Agent):
     def __init__(self, unique_id, model, totalRunners):
         # initialize the parent class with required parameters
@@ -25,12 +26,10 @@ class Runner(mesa.Agent):
         super().__init__(unique_id, model)
         self.time = time
         self.mean = 0
-        self.notSent = True
+        self.s = 0
 
     def step(self):
-        if self.notSent:
+        if self.s == 0:
             ttp = self.model.schedule.agents[-1]
             ttp.values.append(self.time)
-            self.notSent = False
-        # else:
-        #     print(self.mean)
+            self.s = 1

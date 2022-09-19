@@ -24,6 +24,7 @@ _PRIME = 2 ** 127 - 1
 
 _RINT = functools.partial(random.SystemRandom().randint, 0)
 
+
 def _eval_at(poly, x, prime):
     """Evaluates polynomial (coefficient tuple) at x, used to generate a
     shamir pool in make_random_shares below.
@@ -35,6 +36,7 @@ def _eval_at(poly, x, prime):
         accum %= prime
     return accum
 
+
 def make_random_shares(secret, minimum, shares, prime=_PRIME):
     """
     Generates a random shamir pool for a given secret, returns share points.
@@ -45,6 +47,7 @@ def make_random_shares(secret, minimum, shares, prime=_PRIME):
     points = [(i, _eval_at(poly, i, prime))
               for i in range(1, shares + 1)]
     return points
+
 
 def _extended_gcd(a, b):
     """
@@ -65,6 +68,7 @@ def _extended_gcd(a, b):
         y, last_y = last_y - quot * y, y
     return last_x, last_y
 
+
 def _divmod(num, den, p):
     """Compute num / den modulo prime p
 
@@ -74,6 +78,7 @@ def _divmod(num, den, p):
     inv, _ = _extended_gcd(den, p)
     return num * inv
 
+
 def _lagrange_interpolate(x, x_s, y_s, p):
     """
     Find the y-value for the given x, given n (x, y) points;
@@ -81,11 +86,13 @@ def _lagrange_interpolate(x, x_s, y_s, p):
     """
     k = len(x_s)
     assert k == len(set(x_s)), "points must be distinct"
+
     def PI(vals):  # upper-case PI -- product of inputs
         accum = 1
         for v in vals:
             accum *= v
         return accum
+
     nums = []  # avoid inexact division
     dens = []
     for i in range(k):
@@ -98,6 +105,7 @@ def _lagrange_interpolate(x, x_s, y_s, p):
                for i in range(k)])
     return (_divmod(num, den, p) + p) % p
 
+
 def recover_secret(shares, prime=_PRIME):
     """
     Recover the secret from share points
@@ -108,22 +116,28 @@ def recover_secret(shares, prime=_PRIME):
     x_s, y_s = zip(*shares)
     return _lagrange_interpolate(0, x_s, y_s, prime)
 
+
 def main():
     """Main function"""
-    secret = 1234
-    shares = make_random_shares(secret, minimum=3, shares=6)
 
-    print('Secret:                                                     ',
-          secret)
-    print('Shares:')
-    if shares:
-        for share in shares:
-            print('  ', share)
+    # We have 3 users
+    # sum = 30
+    shares1 = make_random_shares(12, minimum=3, shares=4)
+    shares2 = make_random_shares(8, minimum=3, shares=4)
+    shares3 = make_random_shares(10, minimum=3, shares=4)
 
-    print('Secret recovered from minimum subset of shares:             ',
-          recover_secret(shares[:3]))
-    print('Secret recovered from a different minimum subset of shares: ',
-          recover_secret(shares[-3:]))
+    a = recover_secret(shares1[:3])
+    print(a)
+
+    # x = 0
+    x = (1, shares1[0][1] + shares2[0][1] + shares3[0][1] )
+    y = (2, shares1[1][1] + shares2[1][1] + shares3[1][1] )
+    z = (3, shares1[2][1] + shares2[2][1] + shares3[2][1] )
+    l = [x,  y, z]
+
+    print('Secret recovered from minimum subset of shares:       ',
+          recover_secret(l))
+
 
 if __name__ == '__main__':
     main()
