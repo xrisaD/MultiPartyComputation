@@ -5,8 +5,8 @@ from mpc.agents import Runner
 class MPCModel(mesa.Model):
     """A model with """
 
-    def __init__(self, times):
-        self.num_agents = len(times)
+    def __init__(self, t, minimum):
+        self.num_agents = len(t)
 
         # activates all the agents once per step, in random order
         self.schedule = mesa.time.BaseScheduler(self)
@@ -15,8 +15,8 @@ class MPCModel(mesa.Model):
         # Create runners
         # with ids = 1.. N
         # Create runners
-        for i, time in zip(range(self.num_agents), times):
-            a = Runner(i+1, self, time, self.num_agents)
+        for i, time in zip(range(self.num_agents), t):
+            a = Runner(i+1, self, time, self.num_agents, minimum)
             self.schedule.add(a)
         # self.datacollector = mesa.DataCollector(
         #     model_reporters={"Gini": compute_gini}, agent_reporters={"Wealth": "wealth"}

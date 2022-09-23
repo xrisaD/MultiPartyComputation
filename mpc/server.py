@@ -11,7 +11,7 @@ from statistics import mean
 # empty_model.step()
 
 # This runs the model 100 times, each model executing 2 steps.
-def runMPC(times_to_run_the_experiment=100, times=None, times_range=None):
+def runMPC(times_to_run_the_experiment=100, times=None, times_range=None, minimum=3):
     if times is None and times_range is None:
         raise Exception("times or times_range should not be none")
 
@@ -21,7 +21,7 @@ def runMPC(times_to_run_the_experiment=100, times=None, times_range=None):
     res = []
     for j in range(times_to_run_the_experiment):
         # Run the model
-        model = MPCModel(times)
+        model = MPCModel(times, minimum)
         start = timeit.default_timer()
         for i in range(3):
             model.step()
