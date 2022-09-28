@@ -122,14 +122,17 @@ def main():
 
     # We have 3 users
     # sum = 30
-    shares1 = make_random_shares(12, minimum=3, shares=4)
-    shares2 = make_random_shares(8, minimum=3, shares=4)
-    shares3 = make_random_shares(10, minimum=3, shares=4)
-    shares4 = make_random_shares(10, minimum=3, shares=4)
-    a = recover_secret(shares1[:3])
-    print(a)
+    shares1 = make_random_shares(12, minimum=4, shares=4)
+    shares2 = make_random_shares(8, minimum=4, shares=4)
+    shares3 = make_random_shares(10, minimum=4, shares=4)
+    shares4 = make_random_shares(10, minimum=4, shares=4)
+    # a = recover_secret(shares1[:3])
+    # print(a)
 
     # x = 0
+
+    print('Secret recovered from minimum subset of shares:       ',
+          recover_secret(shares1))
     x = (1, shares1[0][1] + shares2[0][1] + shares3[0][1]+ shares4[0][1] )
     y = (2, shares1[1][1] + shares2[1][1] + shares3[1][1] + shares4[1][1]  )
     z = (3, shares1[2][1] + shares2[2][1] + shares3[2][1] + shares4[2][1] )
