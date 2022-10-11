@@ -2,7 +2,7 @@
 import mesa
 import timeit
 from mpc.model import MPCModel
-from statistics import mean
+from statistics import median
 
 
 # TTP needs to steps to run
@@ -27,4 +27,4 @@ def runMPC(times_to_run_the_experiment=100, times=None, times_range=None, minimu
             model.step()
         stop = timeit.default_timer()
         res.append(stop - start)
-    return mean(res)
+    return median(res)

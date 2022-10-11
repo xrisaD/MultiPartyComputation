@@ -26,7 +26,7 @@ for t in times:
     res = runTTP(times=t, times_to_run_the_experiment=30)
     time_to_compute_mean_TTP.append(res)
 
-    # call MPC with minimun =3
+    # call MPC with minimun = 3
     res = runMPC(times=t, times_to_run_the_experiment=30, minimum=3)
     time_to_compute_mean_MPC_3.append(res)
 
@@ -37,6 +37,6 @@ for t in times:
     step = step + 1
 
 plot1(num_of_users, time_to_compute_mean_TTP, time_to_compute_mean_MPC_3, ["TTP", "MPC, minimum = 3"])
-plot1(num_of_users, time_to_compute_mean_TTP, time_to_compute_mean_MPC_all, ["TTP", "MPC, minimum = number of users"])
-plot1(num_of_users, time_to_compute_mean_MPC_3, time_to_compute_mean_MPC_all, ["MPC, minimum = 3", "MPC, minimum = number of users"])
-plot2(num_of_users, time_to_compute_mean_TTP, time_to_compute_mean_MPC_3, time_to_compute_mean_MPC_all)
+plot1(num_of_users, time_to_compute_mean_TTP, time_to_compute_mean_MPC_all, ["TTP", "MPC, minimum = number of runners"])
+plot1(num_of_users, time_to_compute_mean_MPC_3, time_to_compute_mean_MPC_all, ["MPC, minimum = 3", "MPC, minimum = number of runners"])
+#plot2(num_of_users, time_to_compute_mean_TTP, time_to_compute_mean_MPC_3, time_to_compute_mean_MPC_all)

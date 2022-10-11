@@ -1,7 +1,7 @@
 import mesa
 import timeit
 from ttp.model import TTPModel
-from statistics import mean
+from statistics import median
 
 
 # TTP needs to steps to run
@@ -26,4 +26,4 @@ def runTTP(times_to_run_the_experiment=100, times=None, times_range=None):
             model.step()
         stop = timeit.default_timer()
         res.append(stop - start)
-    return mean(res)
+    return median(res)
