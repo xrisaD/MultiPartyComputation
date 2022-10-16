@@ -2,12 +2,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def plot1(x, y_ttp, y_mpc, labels):
-    plt.scatter(np.array(x), np.array(y_ttp), label=labels[0])
-    plt.scatter(np.array(x), np.array(y_mpc), label=labels[1],
-            marker ="s")
+def plotFit(x, y, x_line, y_line, labels):
+    plt.scatter(np.array(x), np.array(y), label=labels[0])
+    plt.plot(x_line, y_line, '--', color='red', label=labels[1])
+
     plt.xlabel('number of runners')
-    plt.ylabel('time to compute the meantime (sec)')
+    plt.ylabel('time to compute the meantime (sec)', labelpad=0)
+    plt.legend()
+    plt.show()
+
+
+def plot1(x1, y1, x_line1, y_line1, x2, y2, x_line2, y_line2, labels):
+    plt.scatter(np.array(x1), np.array(y1), label=labels[0])
+    plt.plot(x_line1, y_line1, '--', color='red', label=labels[1])
+
+    plt.scatter(np.array(x2), np.array(y2), label=labels[2], color="orange", marker='s')
+    plt.plot(x_line2, y_line2, '-', color='red', label=labels[3])
+    plt.xlabel('number of runners')
+    plt.ylabel('time to compute the meantime (sec)', labelpad=0)
     plt.legend()
     plt.show()
 

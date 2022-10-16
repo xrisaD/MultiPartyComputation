@@ -1,9 +1,10 @@
 from ttp.server import runTTP
 from mpc.server import runMPC
-from plot.plot import plot1, plot2
+from plot.fitdata import fitMPC, fitTTP
+from plot.plot import plot1, plot2, plotFit
 import random
 
-#num_of_users = range(5, 10, 1)
+
 num_of_users = range(5, 55, 5)
 mins = []
 
@@ -36,7 +37,19 @@ for t in times:
 
     step = step + 1
 
-plot1(num_of_users, time_to_compute_mean_TTP, time_to_compute_mean_MPC_3, ["TTP", "MPC, minimum = 3"])
-plot1(num_of_users, time_to_compute_mean_TTP, time_to_compute_mean_MPC_all, ["TTP", "MPC, minimum = number of runners"])
-plot1(num_of_users, time_to_compute_mean_MPC_3, time_to_compute_mean_MPC_all, ["MPC, minimum = 3", "MPC, minimum = number of runners"])
+x_all, y_all, params_all = fitMPC(num_of_users, time_to_compute_mean_MPC_all)
+print("MPC ALL: " + str(params_all))
+x_3, y_3, params_3 = fitMPC(num_of_users, time_to_compute_mean_MPC_3)
+print("MPC 3: " + str(params_3))
+x_TTP, y_TTP, params_TTP = fitTTP(num_of_users, time_to_compute_mean_TTP)
+print("TTP: " + str(params_TTP))
+
+
+plotFit(num_of_users, time_to_compute_mean_TTP, x_TTP, y_TTP, ["TTP", "fitted curve for TTP"])
+plotFit(num_of_users, time_to_compute_mean_MPC_3, x_3, y_3, ["MPC, minimum = 3", "fitted curve for MPC, minimum = 3"])
+plotFit(num_of_users, time_to_compute_mean_MPC_all, x_all, y_all, ["MPC, minimum = number of users", "fitted curve for MPC, minimum = number of users"])
+
+plot1(num_of_users, time_to_compute_mean_TTP, x_TTP, y_TTP,  num_of_users, time_to_compute_mean_MPC_3, x_3, y_3, ["TTP", "fitted curve for TTP", "MPC, minimum = 3", "fitted curve for MPC, minimum = 3"])
+plot1(num_of_users, time_to_compute_mean_TTP, x_TTP, y_TTP, num_of_users, time_to_compute_mean_MPC_all, x_all, y_all, ["TTP", "fitted curve for TTP", "MPC, minimum = number of users", "fitted curve for MPC, minimum = number of users"])
+plot1(num_of_users, time_to_compute_mean_MPC_3, x_3, y_3, num_of_users, time_to_compute_mean_MPC_all, x_all, y_all, ["MPC, minimum = 3", "fitted curve for MPC, minimum = 3", "MPC, minimum = number of users", "fitted curve for MPC, minimum = number of users"])
 #plot2(num_of_users, time_to_compute_mean_TTP, time_to_compute_mean_MPC_3, time_to_compute_mean_MPC_all)
